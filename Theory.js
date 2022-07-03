@@ -15,6 +15,7 @@ var currency;
 // Vars
 var a = BigNumber.ZERO;
 var b = BigNumber.TWO;
+var gas = BigNumber.ONE
 
 var init = () => {
     currency = theory.createCurrency();
@@ -32,14 +33,22 @@ var init = () => {
         let getDesc = (level) => "a_1=" + getA1(level).toString(0);
         a1 = theory.createUpgrade(1, currency, new FirstFreeCost(new ExponentialCost(25, Math.log2(4))));
         a1.getDescription = (_) => Utils.getMath(getDesc(a1.level));
-        a1.getInfo = (amount) => Utils.getMathTo(getDesc(a1.level), getDesc(c1.level + amount));
+        a1.getInfo = (amount) => Utils.getMathTo(getDesc(a1.level), getDesc(a1.level + amount));
+    }
+
+    // a2
+    {
+        let getDesc = (level) => "a_2=" + getA2(level).toString(0);
+        a2 = theory.createUpgrade(1, currency, new FirstFreeCost(new ExponentialCost(2.5e9, Math.log2(4))));
+        a2.getDescription = (_) => Utils.getMath(getDesc(a2.level));
+        a2.getInfo = (amount) => Utils.getMathTo(getDesc(a2.level), getDesc(a2.level + amount));
     }
 
 }
 
 var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
-    a += BigNumber.ONE * getKI(Ki.level)
+    a += BigNumber.ONE * getKI(Ki.level) * b.sqrt()
     b += BigNumber.from(0.002)
     currency.value += dt * a * getKI(Ki.level) * getA1(a1.level);
     theory.invalidateSecondaryEquation();
@@ -60,5 +69,6 @@ var getTau = () => currency.value.pow(0.9);
 
 var getKI = (level) => BigNumber.from(1 + 0.036 * level)
 var getA1 = (level) => Utils.getStepwisePowerSum(level, 2, 15, 0);
+var getA2 = (level) => Utils.getStepwisePowerSum(level, 2, 15, 0);
 
 init();
