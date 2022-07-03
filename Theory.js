@@ -13,7 +13,7 @@ var version = 1;
 var currency;
 
 // Vars
-var a = 0;
+var a = BigNumber.ZERO;
 
 var init = () => {
     currency = theory.createCurrency();
@@ -21,7 +21,9 @@ var init = () => {
 
 var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
+    a += BigNumber.ONE
     currency.value += dt * a;
+    theory.invalidateSecondaryEquation();
 }
 
 var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho^{0.9}, a = " + a.toString(0);
