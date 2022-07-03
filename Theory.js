@@ -26,7 +26,7 @@ var tick = (elapsedTime, multiplier) => {
     theory.invalidateSecondaryEquation();
 }
 
-var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho^{0.9}, a = " + a.toString(0);
+var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho^{0.9}, a = " + a.toString(3);
 var getTau = () => currency.value.pow(0.9);
 
 init();
