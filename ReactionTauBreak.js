@@ -35,6 +35,14 @@ var init = () => {
         w.getDescription = (_) => Utils.getMath(getDesc(w.level));
         w.getInfo = (amount) => Utils.getMathTo(getDesc(w.level), getDesc(w.level + amount));
     }
+
+    // x
+    {
+        let getDesc = (level) => "x=" + getX(level).toString(0);
+        x = theory.createUpgrade(2, currency, new FirstFreeCost(new ExponentialCost(2e3, Math.log2(2))));
+        x.getDescription = (_) => Utils.getMath(getDesc(x.level));
+        x.getInfo = (amount) => Utils.getMathTo(getDesc(x.level), getDesc(x.level + amount));
+    }
 }
 
 var tick = (elapsedTime, multiplier) => {
@@ -55,5 +63,6 @@ var getTau = () => currency.value;
 var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
 
 var getW = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
+var getX = (level) => Utils.getStepwisePowerSum(level, 2, 9, 0);
 
 init();
