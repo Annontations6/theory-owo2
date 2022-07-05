@@ -48,7 +48,7 @@ var init = () => {
 var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
     let bonus = theory.publicationMultiplier;
-    currency.value += dt * bonus * getW(w.level) * (t.value / 20)
+    currency.value += dt * bonus * getW(w.level) * getX(x.level) * (t.value / 20)
     if (t.value == 0) {
         //no much zero t.
     } else {
