@@ -27,12 +27,20 @@ var init = () => {
             prestige.level = 0;
         }
     }
+
+    // w
+    {
+        let getDesc = (level) => "w=" + getW(level).toString(0);
+        w = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(15, Math.log2(2))));
+        w.getDescription = (_) => Utils.getMath(getDesc(w.level));
+        w.getInfo = (amount) => Utils.getMathTo(getDesc(w.level), getDesc(w.level + amount));
+    }
 }
 
 var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
     let bonus = theory.publicationMultiplier;
-    currency.value += dt * bonus * (t.value / 20)
+    currency.value += dt * bonus * getW(w.level) * (t.value / 20)
     if (t.value == 0) {
         //no much zero t.
     } else {
@@ -45,5 +53,7 @@ var getPublicationMultiplier = (tau) => tau.pow(0.164) / BigNumber.THREE;
 var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.164}}{3}";
 var getTau = () => currency.value;
 var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
+
+var getW = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
 
 init();
