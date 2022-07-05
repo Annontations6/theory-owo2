@@ -43,12 +43,20 @@ var init = () => {
         x.getDescription = (_) => Utils.getMath(getDesc(x.level));
         x.getInfo = (amount) => Utils.getMathTo(getDesc(x.level), getDesc(x.level + amount));
     }
+
+    // y
+    {
+        let getDesc = (level) => "y=" + getY(level).toString(0);
+        y = theory.createUpgrade(2, currency, new FirstFreeCost(new ExponentialCost(2e4, Math.log2(2))));
+        y.getDescription = (_) => Utils.getMath(getDesc(y.level));
+        y.getInfo = (amount) => Utils.getMathTo(getDesc(y.level), getDesc(y.level + amount));
+    }
 }
 
 var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
     let bonus = theory.publicationMultiplier;
-    currency.value += dt * bonus * getW(w.level) * getX(x.level) * (t.value / 20)
+    currency.value += dt * bonus * getW(w.level) * getX(x.level) * getY(y.level) * (t.value / 20)
     if (t.value == 0) {
         //no much zero t.
     } else {
@@ -64,5 +72,6 @@ var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.valu
 
 var getW = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
 var getX = (level) => Utils.getStepwisePowerSum(level, 2, 9, 0);
+var getY = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
 
 init();
