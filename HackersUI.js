@@ -38,3 +38,5 @@ var popup = ui.createPopup({
         ]
     })
 });
+
+popup.show();
