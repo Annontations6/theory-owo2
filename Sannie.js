@@ -31,7 +31,7 @@ var init = () => {
 
     for (let i = 0; i < 4; i++) {
         vars[i] = theory.createUpgrade(i, currency, currencyInsert[i])
-        vars[i].getDescription = (_) => "My Formula Is " + Utils.getMath("x") + " | You Gained " + getLevelVars[i] + " Rho Per Second of Variable!"
+        vars[i].getDescription = (_) => "My Formula Is " + Utils.getMath(varsMath[i]) + " | You Gained " + getLevelVars[i] + " Rho Per Second of Variable!"
         vars[i].getInfo = (amount) => "Coming soon..."
     }
 
@@ -43,6 +43,15 @@ var init = () => {
         templates[i].getInfo = (amount) => "Given Template Now!";
         templates[i].maxLevel = 1;
     }
+}
+
+var tick = (elapsedTime, multiplier) => {
+    let dt = BigNumber.from(elapsedTime * multiplier);
+    let bonus = theory.publicationMultiplier;
+    currency.value += dt * bonus * getLevelVars[0] *
+                                   getLevelVars[1] *
+                                   getLevelVars[2] *
+                                   getLevelVars[3];
 }
 
 var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho";
