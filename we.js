@@ -70,7 +70,7 @@ var init = () => {
         a.getDescription = (_) => "You gained " + a_click + " a per click!";
         a.getInfo = (amount) => "Gained " + a_click + " a click";
         a.boughtOrRefunded = (_) => {
-            CollectA(a_click)
+            CollectA(BigNumber.ONE)
             a.level = 0;
         }
     }
