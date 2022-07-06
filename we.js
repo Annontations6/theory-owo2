@@ -18,7 +18,7 @@ var a_sec = BigNumber.ZERO
 var b_sec = BigNumber.ZERO
 var a_click = BigNumber.ONE
 var b_click = BigNumber.ONE
-var g_clic = BigNumber.ONE
+var g_click = BigNumber.ONE
 
 var init = () => {
     //4 Currencies
@@ -34,7 +34,7 @@ var init = () => {
      * @param {string} collect Add collect a A! I show this.
      */
     function CollectA(collect) {
-        a += collect
+        a.value += collect
     }
 
     /**
@@ -69,7 +69,31 @@ var init = () => {
         a = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(40, Math.log2(2.25))));
         a.getDescription = (_) => "You gained " + a_click + " a per click!";
         a.getInfo = (amount) => "Gained " + a_click + " a click";
+        a.boughtOrRefunded = () => {
+            CollectA(a_click)
+            a.level = 0;
+        }
     }
 }
+
+var tick = (elapsedTime, multiplier) => {
+    let dt = BigNumber.from(elapsedTime * multiplier);
+    let bonus = theory.publicationMultiplier;
+    currency.value += dt * bonus * t.pow(0.9) *
+                                   a.value + BigNumber.ONE
+}
+
+var getPrimaryEquation = () => {
+    let result = "\\dot{\\rho} = t^{0.9} ";
+
+    result += "\\times (1 + a)";
+
+    return result;
+}
+
+var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho^{0.07}";
+var getPublicationMultiplier = (tau) => BigNumber.ONE;
+var getPublicationMultiplierFormula = (symbol) => "1";
+var getTau = () => currency.value.pow(0.07);
 
 init();
