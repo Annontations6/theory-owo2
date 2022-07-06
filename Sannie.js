@@ -24,10 +24,11 @@ var init = () => {
 
     // All 3 Templates
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 3; i++) {
         templates[i] = theory.createUpgrade(i, currency, new ExponentialCost(templateCost[i], Math.log2(1)));
-        templates[i].getDescription = (_) => "Template" + (i + 1);
+        templates[i].getDescription = (_) => "Template " + (i + 1);
         templates[i].getInfo = (amount) => "Given Template Now!";
+        templates[i].maxLevel = 1;
     }
 }
 
