@@ -69,7 +69,7 @@ var init = () => {
         a = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(40, Math.log2(2.25))));
         a.getDescription = (_) => "You gained " + a_click + " a per click!";
         a.getInfo = (amount) => "Gained " + a_click + " a click";
-        a.boughtOrRefunded = () => {
+        a.boughtOrRefunded = (_) => {
             CollectA(a_click)
             a.level = 0;
         }
