@@ -5,9 +5,9 @@ import { theory } from "../api/Theory";
 import { Utils } from "../api/Utils";
 
 var id = "while (sky == liver);";
-var name = "Grass Clicker";
-var description = "An implementation of... what? everything you buy will only works while offline";
-var authors = "Sky == liver";
+var name = "Theory+";
+var description = "theory engine what";
+var authors = "annontations6";
 var version = 1;
 
 var currency;
@@ -55,3 +55,5 @@ var init = () => {
 
 
 }
+
+init();
