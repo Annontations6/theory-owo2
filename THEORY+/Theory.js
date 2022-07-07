@@ -62,6 +62,6 @@ var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.16
 var getTau = () => currency.value;
 var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
 
-var getJ =  Utils.getStepwisePowerSum(level, 2, 10, 0);
+var getJ = () =>  Utils.getStepwisePowerSum(level, 2, 10, 0);
 
 init();
