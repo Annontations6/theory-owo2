@@ -51,9 +51,17 @@ var init = () => {
     achievement8 = theory.createAchievement(7, achievement_category_1, "Googol", "Reach 1e100 rho.", () => currency.value > 1e100);
     achievement9 = theory.createAchievement(8, achievement_category_1, "Endgame", "Reach 1e115 rho and finsh to theory ng.", () => currency.value > 1e125);
     achievement99 = theory.createAchievement(100, achievement_category_2, "Afford", "Reach level of j 15", () => j.level > 15);
-    achievement9999 = theory.createSecretAchievement(10000, "jLevel-τ", "Reach level of j 8281", "8281 level???", () => j.level > 8281);
+    achievement9999 = theory.createSecretAchievement(10000, achievement_category_3, "jLevel-τ", "Reach level of j 8281", "8281 level???", () => j.level > 8281);
 
 
 }
+
+var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho";
+var getPublicationMultiplier = (tau) => tau.pow(0.164) / BigNumber.THREE;
+var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.164}}{3}";
+var getTau = () => currency.value;
+var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
+
+var getJ =  Utils.getStepwisePowerSum(level, 2, 10, 0);
 
 init();
